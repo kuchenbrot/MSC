@@ -5,69 +5,69 @@
 #include <iostream>
 #include <vector>
 
-int main()
-{
-    long double z = 0; //Ergebnis, der Funktion
-    long double c = 0.0; //Ist die Eingabe
-    long double a;      //Eingabe der realen Zahl
-    long double b;      //Eingabe für i (b x i)
-    int j = 0;          //Anzahl der Durchläufe (Bis max. der Länge von ergebnise[])
-    bool on_set = false;//Für die Beesndung der while Schleife
-    const int zspeicher_groesse = 1000; // Groesse des Arrays
-    long double ergebnise[zspeicher_groesse]; // Zwischenspeicher der Ergebnise, wichtig für die Überprüfung, ob i gleicher Punkt erreicht wurde
-    char ende; //Am ende, eine beliebige Taste, um das Programm zu beenden.
+bool is_onSet(long double a, long double b) {
+    int j = 0;          //Counter variable for the amounts of calculations
+    const int max_calculations = 50000; //Holds the maximal amount of calculations that are allowed
+    std::vector<long double> ergebnise; //Stores the values of z to compare them with the newest
+    long double z = 0; //Always the current result
+    long double c = 0.0; //The comlex Number (a+b*i)
 
+    while (z < 2.0 && j < max_calculations) {
+        ergebnise.push_back(z);
 
-    std::cout << "Dies ist ei Programm, um zu bestimmen, ob eine Komlexe Zahl Teilder Nadelbrotmenge ist.\n";
-    std::cout << "Bitte gib deinen Wert für a ein.";
-    std::cin >> a;
-    std::cout << "Bitte gib deinen Wert für b ein.";
-    std::cin >> b;
-
-    while (z < 2.0 && !on_set) {
-        ergebnise[j] = z;
-        
         if (j < 1) {
             c = a + b * 1.0;
         }
-        else {                  //Da i die Wurzel von -1 ist, musste das anders verarbeitet werden
+        else {                  //Since i is the squaroot of -1 but you can't calculate it unless you square it you have to process this like this
             c = a + b * -1.0;
         }
-           
-        if (j == zspeicher_groesse) { //Neuanfang der Schleife, um den Array neu zu beschreiben
-            j = 1;
-        }
 
-        z = pow(z, 2) + c; //Die eigentliche Funktion
+        z = pow(z, 2) + c; //The corefunction of the Mandelbrotset
 
-        for (int i = 0; i < zspeicher_groesse; i++) {
-            if (z == ergebnise[i]) { //Überprüfung, ob das neue Ergebnis schonmal erreicht wurde
-                on_set = true;
+        for (int i = 0; i < ergebnise.size(); i++) {
+            if (z == ergebnise.at(i)) { //Comparing the new result with the old ones
+                return true;
             }
         }
         j++;
-        std::cout << z << '\n';
+        //std::cout << z << std::endl;  //For debuging
     }
-
-    if (on_set) {
-        std::cout << "On set!";
+    if (j == max_calculations) { //Since it could be that the while-loop ended because it took to long to calculate this if-statement returns a true if it took to long
+        return true;
     }
     else {
-        std::cout << "Not on set!";
+        return false;
+    }
+}
+
+int main()
+{
+    double start = -2;  //Defines the startpoint from where it should start calculating 
+    double steps = 0.1; //Holds the value by which the numbers to calculate will increase
+    const int ARRAY_SIZE = 4 / steps;  //Defining the ara size so it can be used in for() loops
+    long double * input_a = new long double[ARRAY_SIZE];      //Array for the real numbers (the a in a+b*i)
+    long double * input_b = new long double[ARRAY_SIZE];      //Array for i (the b in a+b*i)
+    bool * set = new bool[ARRAY_SIZE]; //Stores the Value of the Function the size is 18 because I will go from -1.8 to 1.8 in 0.2 Steps
+    char end;
+
+    for (int i = 0; i < ARRAY_SIZE; i++)
+    {
+        input_a[i] = start;
+        input_b[i] = start;
+        start += steps;
     }
 
-    //Ende, Auf Eingabe warten, damit das Ergebnis sichtbar bleibt.
-    std::cin >> ende;
+    std::cout << "[";
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        for (int j = 0; j < ARRAY_SIZE; j++) {
+            set[i] = is_onSet(input_a[i], input_b[j]);
+            std::cout << "[" << set[i] << ", " << input_a[i] << ", " << input_b[j] << "]" << ", ";
+        }
+    }
+    std::cout << "]";
+
+    //The end, it waits for input so the console window stays open
+    std::cin >> end;
     return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

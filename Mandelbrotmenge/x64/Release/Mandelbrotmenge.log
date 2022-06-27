@@ -1,6 +1,8 @@
 ﻿  Mandelbrotmenge.cpp
+C:\Users\Bela\source\repos\Mandelbrotmenge\Mandelbrotmenge\Mandelbrotmenge.cpp(47,30): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Bela\source\repos\Mandelbrotmenge\Mandelbrotmenge\Mandelbrotmenge.cpp(47,26): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
   Generating code
-  0 of 21 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  2 of 93 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

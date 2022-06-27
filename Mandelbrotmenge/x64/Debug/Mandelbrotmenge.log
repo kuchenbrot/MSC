@@ -1,2 +1,3 @@
 ﻿  Mandelbrotmenge.cpp
+C:\Users\Bela\source\repos\Mandelbrotmenge\Mandelbrotmenge\Mandelbrotmenge.cpp(44,10): warning C4101: 'on_set': unreferenced local variable
   Mandelbrotmenge.vcxproj -> C:\Users\Bela\source\repos\Mandelbrotmenge\x64\Debug\Mandelbrotmenge.exe
